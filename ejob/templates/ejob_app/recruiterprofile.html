@@ -1,0 +1,69 @@
+{%  extends "layout.html" %}
+
+{% block content %}
+
+
+    <div class="container mx-auto mb-12">
+
+    <div class="text-center" style="margin-top: 30px">
+
+        <h2 class="profile-header" id="profile-heading">PROFILE</h2>
+
+    </div>
+
+
+
+
+
+    <div class = "profile-form mx-auto max-w-3xl">
+
+        <div class="form-group">
+
+
+
+
+    <form method="post" id="profile-edit">
+        {% csrf_token %}
+
+    <div class="profile-edit-buttons"> <!-- buttons -->
+
+        <button type="reset" id="profileResetButton" style="display: none"
+                    onclick="resetButton()" class="btn btn-danger"> Cancel  </button>
+
+        <button type="submit" id="profileEditButton"
+                    onclick="toggleProfileEdit()" class="btn btn-success hover:bg-blue-400 bg-blue-500 rounded pl-2 pr-3 py-2 text-white text-base shadow font-medium"> Edit Profile </button>
+
+    </div>
+
+    {% comment %} <div class="mt-4" >
+
+        </div> {% endcomment %}
+
+        {%  for  field in form %}
+            <label for="{{ field.name }}">
+                {{ field.label }} </label>
+            <input readonly name="{{ field.name }}" class="form-control input-control focus:ring-2 focus:ring-blue-500 focus:outline-none w-full text-sm leading-6 text-gray-900 placeholder-gray-400 rounded-md py-2 pl-10 ring-1 ring-gray-200 shadow-sm"
+                 value="{{ field.value}}"/>
+            {{ field.errors }}
+        {% endfor %}
+
+
+
+        <br/>
+
+
+
+    </form>
+
+         </div>
+
+    </div>
+
+
+    </div>
+
+
+
+
+
+{% endblock %}

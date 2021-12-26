@@ -1,0 +1,83 @@
+{%  extends "layout.html" %}
+
+{% block content %}
+
+    <div class="mx-auto max-w-3xl">
+
+
+         <div class="text-center" style="margin-top: 30px">
+             <h2 class="skill-header" id="skill-heading">SKILL</h2>
+         </div>
+
+        <div class="form-group">
+
+             <form method="post" id="skill-form">
+                 {% csrf_token %}
+
+                 <div class="skill-edit-buttons"> <!-- buttons -->
+
+                         <button type="reset" id="skill-reset" style="display: none"
+                             onclick="resetSkill()" class="btn btn-danger"> Cancel  </button>
+
+                         <button type="submit" id="skill-submit"
+                             onclick="toggleSkillEdit()" class="btn btn-success"> Edit Skill </button>
+
+                   </div>
+
+
+             <div>
+
+                {% if messages %}
+
+                      {% for message in messages %}
+
+                         <p style="color: red; margin-top: 30px"> {{ message }}</p>
+
+                      {% endfor %}
+
+                {%  endif %}
+
+            </div>
+
+
+
+                 <div>
+
+                    <div class="row">
+
+
+                        {% for field in form %}
+
+                            <div class="col-md-4 skill-group">
+
+
+                                <label for="{{ field.name }}" >{{ field.label }} </label>
+                                <input readonly name="{{ field.name }}" class="form-control skill-input-control focus:ring-2 focus:ring-blue-500 focus:outline-none w-full text-sm leading-6 text-gray-900 placeholder-gray-400 rounded-md py-2 pl-10 ring-1 ring-gray-200 shadow-sm"
+                                     value="{{ field.value}}">
+                                {{ field.errors }}
+
+                            </div>
+
+
+                        {% endfor %}
+
+
+                    </div>
+
+
+
+
+                 </div>
+
+
+
+             </form>
+         </div>
+    </div>
+
+
+
+
+
+
+{%  endblock %}

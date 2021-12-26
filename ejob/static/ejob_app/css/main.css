@@ -1,0 +1,35 @@
+
+/* date pciker */
+.ui-datepicker {
+    font-size: 20px;
+    width: 200px;
+    background: #ffffff;
+    box-shadow: 0 2px 5px #0000001a;
+    border-radius: 10px;
+    color: black;
+    cursor: pointer;
+ }
+
+
+.menu_profile:hover .menu_profile_hover{
+    display: flex !important;
+}
+
+.table {
+    width: 100%;
+    table-layout: fixed;
+    margin-bottom: 32px;
+}
+
+td {
+    max-width: 250px;
+}
+
+@media only screen and (max-width: 1020px) {
+    .table {
+        white-space: nowrap;
+        display: block !important;
+        overflow-x: auto;
+    }
+  }
+

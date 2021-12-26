@@ -1,0 +1,156 @@
+{%  extends "layout.html" %}
+
+{% block content %}
+
+
+<div class="mx-auto max-w-3xl">
+
+
+
+              <div class="text-center">
+
+                {% if messages %}
+
+                      {% for message in messages %}
+
+                         <h3 style="color: red; margin-top: 30px"> {{ message }}</h3>
+
+                      {% endfor %}
+
+                {%  endif %}
+
+            </div>
+
+    {%  if form %}
+
+    <div class="text-center" style="margin-top: 20px">
+        <h2> EDIT JOB </h2>
+    </div>
+
+    {% endif %}
+
+
+
+    <div class="form-group" >
+
+
+
+
+    <form method="post" id="jobform"  data-subcategory-url="{% url 'subcategory'  %}" >
+
+        {% csrf_token %}
+
+    <div>
+
+        {%  for  field in form %}
+            <!--<label> {{ field.label }}</label>-->
+            {% if field.label == 'ad_choices' %}
+
+                <p style="margin-top: 30px;" >Advertise Job Now</p>
+                <select name="job_ad_flag"  class="focus:ring-2 focus:ring-blue-500 focus:outline-none w-full text-sm leading-6 text-gray-900 placeholder-gray-400 rounded-md py-2 pl-10 ring-1 ring-gray-200 shadow-sm">
+
+                {% for key,value in form.fields.job_ad_flag.choices %}
+
+
+
+                    <option class="option-values"
+                            value="{{  key }}"{% if field.value == key %}selected {% endif  %}>{{ value }}</option>
+
+
+                {% endfor %}
+
+                </select>
+
+
+                {% elif field.label == "Deadline" %}
+
+
+                <label for="{{ field.name }}" style="margin-top: 30px; margin-bottom: -40px">
+                    {{ field.label }} </label>
+                <input id="deadline" name="{{ field.name }}" class="form-control focus:ring-2 focus:ring-blue-500 focus:outline-none w-full text-sm leading-6 text-gray-900 placeholder-gray-400 rounded-md py-2 pl-10 ring-1 ring-gray-200 shadow-sm"
+                value="{{field.value.year}}-{{field.value.month}}-{{field.value.day}}"/>
+
+
+                {%  elif field.label == "Job description" %}
+
+                <label for="{{ field.name }}">
+                {{ field.label}}
+                </label>
+                <textarea name="{{ field.name }}" class="form-control focus:ring-2 focus:ring-blue-500 focus:outline-none w-full text-sm leading-6 text-gray-900 placeholder-gray-400 rounded-md py-2 pl-10 ring-1 ring-gray-200 shadow-sm"
+                           color: #ffffff">{{field.value}}</textarea>
+
+
+                 </select>
+
+                {% elif field.label == 'Category' %}
+
+                    <label for="id_category" style="margin-top: 20px"> Job Category </label>
+                    <select name="category" id="id_category" class="focus:ring-2 focus:ring-blue-500 focus:outline-none w-full text-sm leading-6 text-gray-900 placeholder-gray-400 rounded-md py-2 pl-10 ring-1 ring-gray-200 shadow-sm">
+
+                    {% for key,value in form.fields.category.choices %}
+
+
+                    <option class="option-values"
+                            value="{{  key }}"{% if field.value == key %} selected {% endif  %}>{{ value }}</option>
+
+
+                    {% endfor %}
+
+                    </select>
+
+
+
+                {% elif field.label == 'Sub category' %}
+
+
+                    <label for="id_sub_category" style="margin-top: 20px"> Sub Category </label>
+                    <select name="sub_category" id="id_sub_category" class="focus:ring-2 focus:ring-blue-500 focus:outline-none w-full text-sm leading-6 text-gray-900 placeholder-gray-400 rounded-md py-2 pl-10 ring-1 ring-gray-200 shadow-sm">
+
+
+
+                    <option class="option-values"
+                            value="">{{ field.value }}</option>
+
+                    </select>
+
+
+
+            {% else %}
+                <label for="{{ field.name }}" style="margin-top: 30px; margin-bottom: -40px">
+                    {{ field.label }} </label>
+                <input  name="{{ field.name }}"
+                        value="{% if field.value %} {{field.value}}{% endif %}"
+                        class="form-control focus:ring-2 focus:ring-blue-500 focus:outline-none w-full text-sm leading-6 text-gray-900 placeholder-gray-400 rounded-md py-2 pl-10 ring-1 ring-gray-200 shadow-sm"/>
+            {% endif %}
+            {{ field.errors }}
+            {% endfor %}
+
+
+
+    </div>
+
+
+    {% if form %}
+
+
+    <div class="create-job-button text-center" style="margin-top: 25px">
+
+
+             <button type="submit" class="btn btn-success hover:bg-blue-400 group flex items-center rounded-md bg-blue-500 text-white text-sm font-medium pl-2 pr-3 py-2 shadow-sm" style="width: 150px"> Save Job </button>
+             <button type="reset" class="btn btn-danger hover:bg-blue-400 group flex items-center rounded-md bg-red-500 text-white text-sm font-medium pl-2 pr-3 py-2 shadow-sm" style="width: 150px"> Cancel </button>
+
+
+    </div>
+
+    {% endif %}
+
+
+    </form>
+
+         </div>
+
+    </div>
+
+
+
+{% endblock %}

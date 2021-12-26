@@ -1,0 +1,255 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>EJOBS ECUADOR</title>
+    {% comment %} <link rel="stylesheet" href="{% static  'ejob_app/css/bootstrap.css' %}"/> {% endcomment %}
+    <link rel="stylesheet" href="{% static  'ejob_app/css/main.css' %}"/>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50">
+<div class="section bg-white space-y-4 p-4 sm:px-8 sm:py-6 lg:p-4 xl:px-8 xl:py-6" >
+    <div class="flex items-center px-4 relative" >
+
+        <a class="navbar-brand text-center text-black font-bold w-full" href="/" style="font-size:40px" > Ejobs </a>
+
+        <div class="row absolute right-0">
+            {% if user.is_authenticated %}
+                <div class="menu_profile relative flex justify-content items-center px-4 h-full" id="profile_button" style="
+                            
+                            top: 0;
+                            height: 52px;
+                            right: 0;
+                            bottom: 0;
+                            margin: auto;
+                        ">
+
+                    <img src="https://365psd.com/images/istock/previews/1009/100996291-male-avatar-profile-picture-vector.jpg" alt="logo" class="image_profile w-10 h-10 rounded-full cursor-pointer"/>
+                    
+                    <div class="menu_profile_hover hidden flex flex-col bg-white rounded shadow-lg p-4 absolute top-9 right-4" style="font-size: 16px; z-index: 999">
+                        <div class="bg-gray-100 rounded py-1 px-2">
+                            <h4 class="font-bold">{{user.get_username}}</h4>
+                            <h5> {% if user.is_seeker %} seeker {% else %} Recluiter {% endif%}</h5>
+                        </div>
+                        {% if request.user.is_seeker or request.user == None %}
+                                <a class="navbar-item nav-link" href="{% url 'my_applications' %}"> Applied Jobs </a>
+                                <a class="navbar-item nav-link" href="{% url 'skills' %}">Skills</a>
+                                <a class="navbar-item nav-link" href="{% url 'seeker_profile' %}"> Profile </a>
+                        {% else %}
+                                <a class="navbar-item nav-link" href="{%  url 'manage_jobs' %}"> Manage Jobs </a>
+                                <a class="navbar-item nav-link" href="{% url 'recruiter_profile' %}"> Profile </a>
+                        {% endif %}
+                         <a class="navbar-item nav-link" href="{% url 'logout' %}"> Logout </a>
+                    </div>
+
+                </div>
+            {% else %}
+                <a class="bg-gray-50 px-4 py-2 rounded-full" href="{% url 'login' %}"> Login </a>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="flex flex-col items-center w-full">
+
+        {% comment %} <div class="flex items-center justify-between w-full max-w-md">
+        <h2 class="font-semibold text-gray-900">Jobs List</h2>
+        
+        </div> {% endcomment %}
+        
+        <form  name="searchForm" type="get" action="/search" class="w-full max-w-md mt-4">
+
+                    <div class="group relative" >
+                        <svg width="20" height="20" fill="currentColor" class="absolute left-3 top-1/2 -mt-2.5 text-gray-400 pointer-events-none group-focus-within:text-blue-500" aria-hidden="true">
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" />
+                        </svg>
+
+                        <input name="keyword" type="text" placeholder="Search..." id="searchText" class="focus:ring-2 focus:ring-blue-500 focus:outline-none w-full text-sm leading-6 text-gray-900 placeholder-gray-400 rounded-md py-2 pl-10 ring-1 ring-gray-200 shadow-sm"/>
+
+                    </div>
+
+{% comment %} 
+                    <div class="form-group ">
+
+                        <select class="form-control" name="search_by" style="margin-top: 20px;" id="searchCategory">
+
+                            <option value="1">By Job Role</option>
+                            <option value="2"> By Location</option>
+                            <option value="3"> By Remuneration</option>
+
+                        </select>
+
+
+                    </div>
+
+                    <div class="form-group col-md-2">
+
+                        <select class="form-control" name="category" style="margin-top: 20px; background-color: #1a1a1a;
+                                      color:#ffffff" data-url = "{% url 'category' %}"  id="category">
+
+                            <option value="1">IT</option>
+
+
+                        </select>
+
+
+                    </div>
+
+                    <div class="form-group col-md-2">
+
+                        <select class="form-control" name="subcategory" style="margin-top: 20px; background-color: #1a1a1a;
+                                            color:#ffffff" data-subcategory-url = "{% url 'subcategory' %}"  id="subcategory">
+
+                            <option value="1">Software Development</option>
+                            <option value="2">Network</option>
+                            <option value="3">Database Development</option>
+                            <option value="4">Security</option>
+                            <option value="5">System Administration</option>
+
+                        </select>
+
+
+                    </div>
+
+                         <div class="form-group col-md-2">
+
+                        <button class="btn btn-success form-control" type="submit" style="margin-top: 20px"> Search </button>
+
+
+                    </div>
+ {% endcomment %}
+
+        </form>
+
+    </div>
+
+
+     
+
+     </div>
+
+
+{% comment %} <li class="flex">
+      <a href="/new" class="hover:border-blue-500 hover:border-solid hover:bg-white hover:text-blue-500 group w-full flex flex-col items-center justify-center rounded-md border-2 border-dashed border-gray-300 text-sm leading-6 text-gray-900 font-medium py-3">
+        <svg class="group-hover:text-blue-500 mb-1 text-gray-400" width="20" height="20" fill="currentColor" aria-hidden="true">
+          <path d="M10 5a1 1 0 0 1 1 1v3h3a1 1 0 1 1 0 2h-3v3a1 1 0 1 1-2 0v-3H6a1 1 0 1 1 0-2h3V6a1 1 0 0 1 1-1Z" />
+        </svg>
+        New project
+      </a>
+    </li> {% endcomment %}
+
+
+
+    {%  block content %}
+    {%  endblock content %}
+
+</body>
+<script src="{%  static 'ejob_app/js/script.js' %}"> </script>
+<script src=" https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script>
+
+    //code to generate date pickers
+     $( function() {
+    $( "#datepicker" ).datepicker({
+        dateFormat : 'yy-mm-dd'
+    });
+  } );
+
+
+     $("#deadline").datepicker({
+      autoclose: true,
+      todayHighlight: true,
+         dateFormat : 'yy-mm-dd',
+      minDate : 0,
+ });
+
+
+      $("#interview-date").datepicker({
+      autoclose: true,
+      todayHighlight: true,
+         dateFormat : 'yy-mm-dd',
+      minDate : 0,
+ });
+
+
+    $(document).ready(function(){
+
+        var url = $('#category').attr("data-url");
+
+        $.ajax({
+           url : url,
+            success: function d(data) {
+
+               $('#category').html(data);
+            }
+        });
+
+    });
+
+
+
+
+
+ $("#category").change(function () {
+
+    var url = $("#subcategory").attr("data-subcategory-url");
+    var category = $(this).val();
+
+    $.ajax({
+        url : url,
+        data : {
+
+            'category' : category
+        },
+        success : function d(data) {
+
+            $('#subcategory').html(data);
+        }
+    });
+
+});
+
+
+
+
+
+
+
+
+// job create drop down list loader
+
+$('#id_category').change(function () {
+console.log("Changed category");
+    var url = $("#jobform").attr("data-subcategory-url");
+
+
+    var category = $(this).val();
+
+
+    $.ajax({
+
+        url : url,
+        data : {
+
+            'category' : category
+        },
+        success : function d(data) {
+
+            $('#id_sub_category').html(data);
+        }
+    });
+
+});
+
+
+
+
+
+
+</script>
+
+</html>

@@ -1,0 +1,61 @@
+{%  extends "layout.html" %}
+
+{% block content %}
+
+<div class="mx-auto max-w-md">
+    <div class="container">
+
+        <div class="logo">
+
+        <h1 class="text-center logo-text"> Online Job Seeking System </h1>
+
+    </div>
+
+    </div>
+
+
+    <div class="container page-center text-center">
+
+    <div class="row align-content-around">
+
+        <div class="col-lg-12 text-center">
+        <h2 class="login-text"> SIGN UP AS A JOB RECRUITER </h2>
+        </div>
+
+    </div>
+
+    <div class="form-group">
+
+    <form method="POST">
+        {% csrf_token %}
+
+        {%  for  field in form %}
+            <!--<label> {{ field.label }}</label>-->
+            {% if field.label  == "Password"  or   field.label == "Password confirmation"%}
+
+                <input type="password" placeholder="{{ field.label }}" name="{{ field.name }}" class="form-control  mt-4 focus:ring-2 focus:ring-blue-500 focus:outline-none w-full text-sm leading-6 text-gray-900 placeholder-gray-400 rounded-md py-2 pl-10 ring-1 ring-gray-200 shadow-sm">
+
+            {% else %}
+            <input placeholder="{{ field.label }}" name="{{ field.name }}" class="form-control mt-4 focus:ring-2 focus:ring-blue-500 focus:outline-none w-full text-sm leading-6 text-gray-900 placeholder-gray-400 rounded-md py-2 pl-10 ring-1 ring-gray-200 shadow-sm">
+            {% endif %}
+            {{ field.errors }}
+
+        {% endfor %}
+        <br/>
+        <button type="submit" class="btn btn-success mt-4 ml-auto hover:bg-blue-400 group flex items-center rounded-md bg-blue-500 text-white text-sm font-medium pl-2 pr-3 py-2 shadow-sm" style="width: 150px"> Sign Up </button>
+    </form>
+
+    </div>
+
+
+    <div class="text-center">
+        <a href="{%  url 'login' %}">
+            <button class="button btn-primary " style="width: 150px; height: 50px">BACK TO LOGIN</button>
+        </a>
+
+
+    </div>
+</div>
+    </div>
+
+{%  endblock content %}

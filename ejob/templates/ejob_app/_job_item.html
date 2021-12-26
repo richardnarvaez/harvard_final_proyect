@@ -1,0 +1,76 @@
+{% load humanize %}
+
+<div class="bg-gray-50 p-4 sm:px-8 sm:pt-6 sm:pb-8 lg:p-4 xl:px-8 xl:pt-6 xl:pb-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2 gap-4 text-sm leading-6">
+
+    {% if results %}
+
+        {% for item in results %}
+
+            <a href="{% url 'job_details'   item.id  %}" class="hover:bg-gray-50 hover:ring-blue-500 hover:shadow-md group rounded-md p-3 bg-white ring-1 ring-gray-200 shadow-sm">
+
+    <div class="relative p-3 col-start-1 row-start-1 flex flex-col-reverse rounded-lg sm:p-0 lg:row-start-1">
+      <h1 class="mt-1 text-lg font-semibold text-white dark:text-gray-900 md:text-2xl">{{ item.job_role }}</h1>
+      <p class="text-sm leading-4 font-medium text-white dark:text-gray-500">{{ item.organization }}</p>
+    </div>
+
+    <dl class="mt-4 text-xs font-medium flex items-center row-start-2 sm:mt-1 sm:row-start-3 md:mt-2.5 lg:row-start-2">
+      <dt class="sr-only">Reviews</dt>
+      <dd class="text-indigo-600 flex items-center">
+        <svg style="width:24px;height:24px" viewBox="0 0 24 24">
+            <path fill="currentColor" d="M21.1,12.5L22.5,13.91L15.97,20.5L12.5,17L13.9,15.59L15.97,17.67L21.1,12.5M10,17L13,20H3V18C3,15.79 6.58,14 11,14L12.89,14.11L10,17M11,4A4,4 0 0,1 15,8A4,4 0 0,1 11,12A4,4 0 0,1 7,8A4,4 0 0,1 11,4Z" />
+        </svg>
+        <span class="ml-2">{{ item.applications_count }}<span class="text-gray-400 font-normal">  (Applicants)</span></span>
+      </dd>
+      <dt class="sr-only">Location</dt>
+      <dd class="flex items-center">
+        <svg width="2" height="2" aria-hidden="true" fill="currentColor" class="mx-3 text-gray-300">
+          <circle cx="1" cy="1" r="1"></circle>
+        </svg>
+        <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-1" aria-hidden="true">
+          <path d="M18 11.034C18 14.897 12 19 12 19s-6-4.103-6-7.966C6 7.655 8.819 5 12 5s6 2.655 6 6.034Z"></path>
+          <path d="M14 11a2 2 0 1 1-4 0 2 2 0 0 1 4 0Z"></path>
+        </svg>
+        {{ item.location }}
+      </dd>
+    </dl>
+    
+                <div class=" flex justify-between mt-4 text-sm leading-6 col-start-1 sm:col-span-2 lg:mt-6 lg:row-start-4 lg:col-span-1">
+            
+                    <h6 class="bg-gray-200 rounded-full px-3">{{ item.remuneration|intcomma }} USD / Year</h6>
+                    <h6> {% if item.days_ago == 0 %} Now {% else %} {{ item.days_ago }} days ago {% endif %}</h6>
+                </div>
+
+                    <p class="mt-3"> {{ item.job_description|slice:":255"  }}</p>
+
+            {% comment %} <a href="{% url 'job_details'   item.id  %}">
+                <button class="btn bg-warning clearfix apply-button"  style="float: right"> Details </button>
+            </a> {% endcomment %}
+
+
+            </a>
+
+        {% endfor %}
+
+        {% else %}
+
+
+         <div class="text-center page-center" style="border: none; width: auto">
+
+                {% if messages %}
+
+                      {% for message in messages %}
+                         <h1 style="color: red; margin-top: 30px"> {{ message }}</h1>
+                      {% endfor %}
+
+                {%  endif %}
+
+            </div>
+
+
+
+    {% endif %}
+
+
+
+
+</div>

@@ -1,0 +1,158 @@
+{%  extends "layout.html" %}
+
+{% block content %}
+
+
+    <div class="container" xmlns="http://www.w3.org/1999/html">
+
+
+     <div class="text-center">
+
+                {% if messages %}
+
+                      {% for message in messages %}
+
+                         <h6 style="color: red; margin-top: 30px"> {{ message }}</h6>
+
+                      {% endfor %}
+
+                {%  endif %}
+
+     </div>
+
+
+    <div class="text-center" id="interview-form" style="display: block">
+
+    {% if application.status == 'I' %}
+        <a href="{% url 'accept_final_applicant' application.id %}" >ACCEPT FINAL INTERVIEW</a>
+    {% endif %}
+
+    </div>
+
+
+    <div  style="margin-top: 40px">
+
+        {%  if seeker and application %}
+
+            <div class="text-center">
+                <h2> Applicant Details </h2>
+            </div>
+
+            <table class="table table-dark mx-auto max-w-3xl">
+
+                <tbody>
+
+                    <tr>
+                          <th scope="row" class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider"> Application Status  </th>
+                          <td class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                              {%  if application.status == 'A' %}
+                                  ACTIVE APPLICATION
+                                  <span style="margin-left: 300px">
+                                  <a href="{% url 'accept_applicant' application.id %}" class="btn-sm btn-info hover:bg-green-400 group flex items-center rounded-md bg-green-500 text-white text-sm font-medium pl-2 pr-3 py-2 shadow-sm">
+                                    ACCEPT APPLICATION
+                                  </a>
+                                  <a href="{% url 'reject_applicant' application.id %}" class="btn-sm btn-danger hover:bg-red-400 group flex items-center rounded-md bg-red-500 text-white text-sm font-medium pl-2 pr-3 py-2 shadow-sm">
+                                    REJECT APPLICATION
+                                  </a>
+                                  {% elif application.status == 'S' %}
+                                  APPLICANT SELECTED
+                                  <span style="margin-left: 300px">
+                                  <a href="{% url 'send_interview_call' application.id %}">
+                                      <button class="btn-sm btn-info btn-sm btn-danger hover:bg-blue-400 group flex items-center rounded-md bg-blue-500 text-white text-sm font-medium pl-2 pr-3 py-2 shadow-sm" id="interview-button" style="margin-right: 20px">
+                                      SEND INTERVIEW CALL
+                                       </button>
+                                  </a>
+                                  <a href="{% url 'reject_applicant' application.id %}">
+                                    <button class="btn-sm btn-danger btn-sm btn-danger hover:bg-red-400 group flex items-center rounded-md bg-red-500 text-white text-sm font-medium pl-2 pr-3 py-2 shadow-sm">REJECT APPLICATION</button>
+                                  </a> </span>
+                                  {% elif application.status == 'I' %}
+                                  <span style="margin-left: 300px">
+                                  <button style="margin-right: 20px" class="btn-sm btn-success">
+                                      INTERVIEW INVITE SENT </button>
+                                   </span>
+                                   {% elif application.status == 'V'%}
+                                   <span style="margin-left: 300px">
+                                        IS APPROVED
+                                    </span>
+                                  {% else %} APPLICANT REJECTED
+                                  <span style="margin-left: 300px">
+                                    <a href="{% url 'accept_applicant' application.id %}">
+                                    <button class="btn-sm btn-warning" style="margin-right: 20px">
+                                        RE-ACCEPT APPLICATION
+                                    </button>
+                                  </a>
+                                  {% endif %}
+                                  </span>
+
+
+                              </td>
+
+                     </tr>
+                     <tr>
+                          <th scope="row" class="px-5 py-5 border-b border-gray-200 bg-white text-sm"> First Name  </th>
+                          <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">{{ seeker.first_name }}</td>
+
+                     </tr>
+                    <tr>
+                          <th scope="row" class="px-5 py-5 border-b border-gray-200 bg-white text-sm"> Last Name  </th>
+                          <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">{{ seeker.last_name }}</td>
+
+                     </tr>
+                     <tr>
+                          <th scope="row" class="px-5 py-5 border-b border-gray-200 bg-white text-sm"> Matching Score </th>
+                          <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">{{ application.matching_score }}</td>
+
+                     </tr>
+                     <tr>
+                          <th scope="row" class="px-5 py-5 border-b border-gray-200 bg-white text-sm"> Cover Letter</th>
+                          <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">{{ application.cover_letter }}</td>
+
+                     </tr>
+                     <tr>
+                          <th scope="row" class="px-5 py-5 border-b border-gray-200 bg-white text-sm"> CV </th>
+                          <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">{{ application.cv }}</td>
+
+                     </tr>
+                    <tr>
+                          <th scope="row" class="px-5 py-5 border-b border-gray-200 bg-white text-sm"> Gender  </th>
+                          <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">{% if seeker.gender == 'M' %} Male {% else %} Female {% endif %}</td>
+
+                     </tr>
+                    <tr>
+                          <th scope="row" class="px-5 py-5 border-b border-gray-200 bg-white text-sm"> Address  </th>
+                          <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">{{ seeker.address }}</td>
+
+                     </tr>
+                    <tr>
+                          <th scope="row" class="px-5 py-5 border-b border-gray-200 bg-white text-sm"> Phone  </th>
+                          <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">{{ seeker.phone }}</td>
+
+                     </tr>
+                    <tr>
+                          <th scope="row" class="px-5 py-5 border-b border-gray-200 bg-white text-sm"> Current Job </th>
+                          <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">{{ seeker.current_job_role }}</td>
+
+                     </tr>
+                    <tr>
+                          <th scope="row" class="px-5 py-5 border-b border-gray-200 bg-white text-sm"> Current Company </th>
+                          <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">{{ seeker.current_company }}</td>
+
+                     </tr>
+
+                </tbody>
+            </table>
+
+
+        {%  endif %}
+
+
+    </div>
+
+
+
+
+
+    </div>
+
+
+{% endblock %}

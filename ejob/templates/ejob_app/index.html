@@ -1,0 +1,41 @@
+
+{%  extends "layout.html" %}
+
+{% block content %}
+
+    {%  if request.user.is_seeker %}
+       {% include 'ejob_app/_job_item.html' %}
+    {% else %}
+                {% if messages %}
+
+                      {% for message in messages %}
+
+                          {% if message.tags == 'success' %}
+                          <div class="text-center" id="messages">
+                          <p style="color:#0d0d0d; height: 30px; font-size: 15px"   > {{ message }}</p>
+                          </div>
+                           {% endif %}
+                      {% endfor %}
+
+                {%  endif %}
+
+        <a href="{% if request.user.is_authenticated %} /add_jobs {% else %} /login {% endif %}" class="fixed bottom-8 right-10 hover:bg-blue-400 group flex items-center rounded-full bg-blue-500 text-white text-base md:text-sm font-medium  pl-6 pr-7 py-3  md:pl-3 md:pr-4 md:py-2 shadow-sm">
+            <svg width="20" height="20" fill="currentColor" class="mr-2" aria-hidden="true">
+            <path d="M10 5a1 1 0 0 1 1 1v3h3a1 1 0 1 1 0 2h-3v3a1 1 0 1 1-2 0v-3H6a1 1 0 1 1 0-2h3V6a1 1 0 0 1 1-1Z" />
+            </svg>
+            New
+        </a>
+
+        <div style="margin-top: 20px" >
+            {% include 'ejob_app/_job_item.html' %}
+        </div>
+
+
+
+
+    {% endif %}
+
+
+
+
+{%  endblock content %}
